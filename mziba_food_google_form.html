@@ -1,0 +1,212 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.form-wrap { max-width: 620px; margin: 0 auto; padding: 1.5rem 1rem; }
+.form-header { background: #1a7a52; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; padding: 1.5rem 1.5rem 1.25rem; color: white; }
+.form-header h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.5rem; }
+.form-header p { font-size: 14px; opacity: 0.88; line-height: 1.6; }
+.progress-bar { height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; margin-top: 1rem; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: white; border-radius: 2px; transition: width 0.3s ease; }
+.form-body { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-top: none; border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); padding: 1.25rem 1.5rem; }
+.q-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.q-num { font-size: 11px; color: var(--color-text-tertiary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+.q-label { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.9rem; line-height: 1.5; }
+.q-required { color: #c0392b; margin-left: 2px; }
+.option { display: flex; align-items: flex-start; gap: 10px; padding: 7px 10px; border-radius: var(--border-radius-md); cursor: pointer; transition: background 0.12s; margin-bottom: 2px; }
+.option:hover { background: var(--color-background-secondary); }
+.option input[type=radio], .option input[type=checkbox] { margin-top: 2px; accent-color: #1a7a52; flex-shrink: 0; width: 16px; height: 16px; }
+.option label { font-size: 14px; color: var(--color-text-primary); cursor: pointer; line-height: 1.5; }
+.option label span.tag { font-size: 11px; background: #e1f5ee; color: #0f6e56; border-radius: 4px; padding: 1px 6px; margin-left: 6px; font-weight: 500; }
+.text-input { width: 100%; border: none; border-bottom: 1.5px solid var(--color-border-secondary); padding: 6px 2px; font-size: 14px; color: var(--color-text-primary); background: transparent; outline: none; margin-top: 0.25rem; font-family: var(--font-sans); }
+.text-input:focus { border-bottom-color: #1a7a52; }
+.text-input:invalid { border-bottom-color: #c0392b; }
+.submit-btn { display: inline-flex; align-items: center; gap: 6px; background: #1a7a52; color: white; border: none; border-radius: var(--border-radius-md); padding: 12px 24px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; width: 100%; justify-content: center; transition: all 0.2s; font-family: var(--font-sans); }
+.submit-btn:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-footer { font-size: 12px; color: var(--color-text-secondary); text-align: center; padding-top: 1rem; line-height: 1.6; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 0.5rem 0 1rem; }
+.intro-card { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 14px; color: var(--color-text-primary); line-height: 1.7; }
+.success-message { display: none; background: #d4edda; border: 1px solid #c3e6cb; border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; color: #155724; text-align: center; animation: slideIn 0.3s ease; }
+.success-message.show { display: block; }
+.error-message { display: none; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: var(--border-radius-lg); padding: 1rem; margin-bottom: 1rem; color: #721c24; font-size: 13px; }
+.error-message.show { display: block; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.field-error { border-bottom-color: #c0392b !important; }
+</style>
+
+<div class="form-wrap">
+  <div class="form-header">
+    <h1>Mziba Food — Ton avis 🇨🇲🇩🇪</h1>
+    <p>Salut la famille, on teste un service : des voyageurs ramènent tes produits du bled direct de Yaoundé/Douala. Frais, moins cher que l'épicerie. Aide-nous avec 7 questions (2 min) 👇</p>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <div class="form-body">
+    <div id="successMessage" class="success-message">
+      ✅ Merci ! Tes réponses ont été envoyées avec succès. À bientôt ! 🙏
+    </div>
+    <div id="errorMessage" class="error-message"></div>
+
+    <form id="mzibaForm">
+    <div class="intro-card">
+      <strong>Pourquoi ce questionnaire ?</strong><br>
+      Avant de lancer Mziba Food, on veut s'assurer que le service correspond à tes besoins et ton budget. 20 premiers testeurs = <strong>-20% sur le premier pack.</strong>
+    </div>
+
+      <div class="q-card">
+      <div class="q-num">Question 1 / 7</div>
+      <div class="q-label">Achètes-tu déjà bâton de manioc / tapioca / haricot en Allemagne ? <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q1" id="q1a" value="Oui, 1 fois/mois ou plus" required><label for="q1a">Oui, 1 fois/mois ou plus</label></div>
+      <div class="option"><input type="radio" name="q1" id="q1b" value="Oui, 2–3 fois/an"><label for="q1b">Oui, 2–3 fois/an</label></div>
+      <div class="option"><input type="radio" name="q1" id="q1c" value="Non, trop cher / pas bon ici"><label for="q1c">Non, trop cher / pas bon ici</label></div>
+      <div class="option"><input type="radio" name="q1" id="q1d" value="Non, je ramène quand je voyage"><label for="q1d">Non, je ramène quand je voyage</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 2 / 7</div>
+      <div class="q-label">Pour 5 kg mix "Bâton 2kg + Tapioca 1kg + Haricot 1kg + Arachides 1kg", frais du marché, livré en 7 jours — tu paierais max combien ? <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q2" id="q2a" value="49,99 €" required><label for="q2a">49,99 €</label></div>
+      <div class="option"><input type="radio" name="q2" id="q2b" value="59,99 €"><label for="q2b">59,99 €</label></div>
+      <div class="option"><input type="radio" name="q2" id="q2c" value="69,99 €"><label for="q2c">69,99 € <span class="tag">Prix actuel</span></label></div>
+      <div class="option"><input type="radio" name="q2" id="q2d" value="79,99 €"><label for="q2d">79,99 €</label></div>
+      <div class="option"><input type="radio" name="q2" id="q2e" value="Je n'achète pas"><label for="q2e">Je n'achète pas</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 3 / 7</div>
+      <div class="q-label">Quel pack tu prendrais en priorité ? <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q3" id="q3a" value="Essentiels — Bâton 2kg + Tapioca 1kg + Haricot 1kg + Arachides 1kg" required><label for="q3a"><strong>Essentiels</strong> — Bâton 2kg + Tapioca 1kg + Haricot 1kg + Arachides 1kg</label></div>
+      <div class="option"><input type="radio" name="q3" id="q3b" value="Petit déj — Farine maïs + Tapioca + Haricot blanc + Arachides + Farine manioc"><label for="q3b"><strong>Petit déj</strong> — Farine maïs + Tapioca + Haricot blanc + Arachides + Farine manioc</label></div>
+      <div class="option"><input type="radio" name="q3" id="q3c" value="Découverte — Bâton + Gari + Haricot + Arachides + Épices 0,5kg"><label for="q3c"><strong>Découverte</strong> — Bâton + Gari + Haricot + Arachides + Épices 0,5kg</label></div>
+      <div class="option"><input type="radio" name="q3" id="q3d" value="Autre"><label for="q3d">Autre (précise ci-dessous)</label></div>
+      <input class="text-input" type="text" name="q3_other" placeholder="Décris ton pack idéal..." maxlength="200">
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 4 / 7</div>
+      <div class="q-label">Si tu dois payer 5,49 € au facteur DHL quand le colis arrive, c'est : <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q4" id="q4a" value="Normal, pas de souci" required><label for="q4a">Normal, pas de souci</label></div>
+      <div class="option"><input type="radio" name="q4" id="q4b" value="Chiant mais ok si le produit est frais"><label for="q4b">Chiant mais ok si le produit est frais</label></div>
+      <div class="option"><input type="radio" name="q4" id="q4c" value="Bloquant — je veux tout payer avant"><label for="q4c">Bloquant — je veux tout payer avant</label></div>
+      <div class="option"><input type="radio" name="q4" id="q4d" value="Je préfère récupérer en point relais gratuit"><label for="q4d">Je préfère récupérer en point relais gratuit</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 5 / 7</div>
+      <div class="q-label">En combien de temps tu veux recevoir après commande ? <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q5" id="q5a" value="48h max" required><label for="q5a">48h max</label></div>
+      <div class="option"><input type="radio" name="q5" id="q5b" value="5–7 jours ok"><label for="q5b">5–7 jours ok</label></div>
+      <div class="option"><input type="radio" name="q5" id="q5c" value="10–15 jours ok si moins cher"><label for="q5c">10–15 jours ok si moins cher</label></div>
+      <div class="option"><input type="radio" name="q5" id="q5d" value="1 mois ok"><label for="q5d">1 mois ok</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 6 / 7</div>
+      <div class="q-label">Tu préfères commander : <span class="q-required">*</span></div>
+      <div class="option"><input type="radio" name="q6" id="q6a" value="1 fois pour tester" required><label for="q6a">1 fois pour tester</label></div>
+      <div class="option"><input type="radio" name="q6" id="q6b" value="Abonnement 1 pack/mois — 10% de réduction"><label for="q6b">Abonnement 1 pack/mois — 10% de réduction</label></div>
+      <div class="option"><input type="radio" name="q6" id="q6c" value="Seulement si rupture à l'épicerie"><label for="q6c">Seulement si rupture à l'épicerie</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num">Question 7 / 7</div>
+      <div class="q-label">Laisse ton WhatsApp si tu veux faire partie des 20 premiers testeurs à -20% <span style="font-size:13px; color:var(--color-text-secondary);">(facultatif)</span></div>
+      <input class="text-input" type="tel" name="whatsapp" placeholder="+49 176 ...">
+    </div>
+
+    <button type="submit" class="submit-btn">
+      📤 Envoyer mes réponses
+    </button>
+
+    <div class="form-footer">
+      Tes données restent privées et ne seront jamais partagées.<br>
+      Merci pour ton aide 🙏 — L'équipe Mziba Food
+    </div>
+    </form>  </div>
+</div>
+
+<script>
+const form = document.getElementById('mzibaForm');
+const progressFill = document.getElementById('progressFill');
+const successMessage = document.getElementById('successMessage');
+const errorMessage = document.getElementById('errorMessage');
+const allInputs = form.querySelectorAll('input[required]');
+
+// Barre de progression
+form.addEventListener('change', updateProgress);
+form.addEventListener('input', updateProgress);
+
+function updateProgress() {
+  let filled = 0;
+  allInputs.forEach(input => {
+    if (input.type === 'radio') {
+      const checked = form.querySelector(`input[name="${input.name}"]:checked`);
+      if (checked) filled++;
+    } else if (input.value.trim()) {
+      filled++;
+    }
+  });
+  const progress = (filled / allInputs.length) * 100;
+  progressFill.style.width = progress + '%';
+}
+
+// Soumission du formulaire
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  // Validation
+  if (!form.checkValidity()) {
+    showError('Veille à remplir toutes les questions obligatoires (avec *)');
+    return;
+  }
+
+  // Collecter les données
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  
+  // Ajouter q3_other si sélectionné "Autre"
+  if (data.q3 === 'Autre' && data.q3_other) {
+    data.q3 = 'Autre: ' + data.q3_other;
+  }
+
+  try {
+    // Envoyer à Netlify Function
+    const response = await fetch('/.netlify/functions/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || 'Erreur serveur');
+    }
+
+    // Afficher succès
+    successMessage.classList.add('show');
+    form.reset();
+    progressFill.style.width = '0%';
+    
+    // Masquer le message après 5 secondes
+    setTimeout(() => {
+      successMessage.classList.remove('show');
+    }, 5000);
+
+  } catch (error) {
+    showError('Erreur lors de l\'envoi. Réessaye plus tard.');
+    console.error('Erreur:', error);
+  }
+});
+
+function showError(message) {
+  errorMessage.textContent = message;
+  errorMessage.classList.add('show');
+  setTimeout(() => {
+    errorMessage.classList.remove('show');
+  }, 4000);
+}
+</script>

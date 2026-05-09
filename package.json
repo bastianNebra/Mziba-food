@@ -1,0 +1,19 @@
+{
+  "name": "mziba-food",
+  "version": "1.0.0",
+  "description": "Mziba Food Survey Form with Netlify & Neon",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step needed'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
