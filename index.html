@@ -3,6 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mziba Food - Ton avis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-sans); }
@@ -66,6 +67,19 @@ body { font-family: var(--font-sans); }
   .submit-btn { padding: 8px 12px; font-size: 13px; margin-top: 1rem; }
   .intro-card { padding: 0.75rem; font-size: 13px; }
   .form-footer { font-size: 11px; padding-top: 0.5rem; }
+}
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6c757d;
+  --color-text-tertiary: #adb5bd;
+  --color-border-secondary: #dee2e6;
+  --color-border-tertiary: #e9ecef;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
 }
 
 </style>
@@ -144,15 +158,17 @@ body { font-family: var(--font-sans); }
       <div class="q-num">Question 6 / 7</div>
       <div class="q-label">Tu préfères commander : <span class="q-required">*</span></div>
       <div class="option"><input type="radio" name="q6" id="q6a" value="1 fois pour tester" required><label for="q6a">1 fois pour tester</label></div>
-      <div class="option"><input type="radio" name="q6" id="q6b" value="Abonnement 1 pack/mois — 10% de réduction"><label for="q6b">Abonnement 1 pack/mois — 10% de réduction</label></div>
+      <div class="option"><input type="radio" name="q6" id="q6b" value="Abonnement 1 pack/mois — 10% de réduction"><label for="q6b">Abonnement 1 pack/mois - 10% de réduction</label></div>
       <div class="option"><input type="radio" name="q6" id="q6c" value="Seulement si rupture à l'épicerie"><label for="q6c">Seulement si rupture à l'épicerie</label></div>
     </div>
 
     <div class="q-card">
       <div class="q-num">Question 7 / 7</div>
-      <div class="q-label">Laisse ton WhatsApp si tu veux faire partie des 20 premiers testeurs à -20% <span style="font-size:13px; color:var(--color-text-secondary);">(facultatif)</span></div>
+      <div class="q-label">Laisse ton WhatsApp ou email si tu veux faire partie des 20 premiers testeurs à -20% <span style="font-size:13px; color:var(--color-text-secondary);">(facultatif)</span></div>
       <input class="text-input" type="tel" name="whatsapp" placeholder="+49 176 ...">
+      <input class="text-input" type="email" name="email" placeholder="ton.email@example.com" style="margin-top: 0.5rem;">
     </div>
+
 
     <button type="submit" class="submit-btn">
       📤 Envoyer mes réponses
