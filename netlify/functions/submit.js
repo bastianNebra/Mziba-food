@@ -49,8 +49,8 @@ exports.handler = async (event, context) => {
 
     // Insérer les données
     const query = `
-      INSERT INTO responses (q1, q2, q3, q4, q5, q6, whatsapp, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+      INSERT INTO responses (q1, q2, q3, q4, q5, q6, whatsapp,email, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
       RETURNING id
     `;
 
@@ -61,7 +61,8 @@ exports.handler = async (event, context) => {
       data.q4,
       data.q5,
       data.q6,
-      data.whatsapp || null
+      data.whatsapp || null,
+      data.email || null
     ];
 
     const result = await client.query(query, values);
