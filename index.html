@@ -176,7 +176,7 @@ body { font-family: var(--font-sans); }
 
     <div class="form-footer">
       Tes données restent privées et ne seront jamais partagées.<br>
-      Merci pour ton aide 🙏 - L'équipe Mziba Food
+      Merci pour ton aide 🙏 - L'équipe Mziba
     </div>
     </form>  </div>
 </div>
@@ -239,16 +239,28 @@ form.addEventListener('submit', async (e) => {
       throw new Error(result.error || 'Erreur serveur');
     }
 
-    // Afficher succès
+    // Afficher uniquement le message de confirmation
+    document.querySelector('.form-header').style.display = 'none';
+    form.style.display = 'none';
+    errorMessage.style.display = 'none';
     successMessage.classList.add('show');
-    form.reset();
-    progressFill.style.width = '0%';
+    successMessage.style.display = 'flex';
+    successMessage.style.flexDirection = 'column';
+    successMessage.style.alignItems = 'center';
+    successMessage.style.justifyContent = 'center';
+    successMessage.style.minHeight = '50vh';
+    successMessage.style.margin = '0 auto';
+    successMessage.style.maxWidth = '700px';
+    successMessage.style.width = '100%';
+    successMessage.style.boxSizing = 'border-box';
+    successMessage.style.fontSize = '1rem';
+    successMessage.style.padding = '2rem';
     
-    // Masquer le message après 5 secondes
-    setTimeout(() => {
-      successMessage.classList.remove('show');
-    }, 5000);
-
+    const formWrap = document.querySelector('.form-wrap');
+    formWrap.style.minHeight = '100vh';
+    formWrap.style.display = 'flex';
+    formWrap.style.alignItems = 'center';
+    formWrap.style.justifyContent = 'center';
   } catch (error) {
     showError('Erreur lors de l\'envoi. Réessaye plus tard.');
     console.error('Erreur:', error);
